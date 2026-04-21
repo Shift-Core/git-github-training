@@ -15,12 +15,13 @@ To keep our work organized, we follow these rules:
 - `fix/readme-typo`
 - `docs/update-readme`
 
-### Commit examples
+### Commit example
 
 - `feat: add homepage`
 - `fix: correct typo in readme`
 - `docs: add setup instructions`
 - `feat(auth): implement JWT-based login`
 - `fix(api): correct response schema for users endpoint`
+
 
 For more details, see [CONTRIBUTING.md](./CONTRIBUTING.md).
