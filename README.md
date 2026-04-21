@@ -15,9 +15,7 @@ To keep our work organized, we follow these rules:
 - `fix/readme-typo`
 - `docs/update-readme`
 
-
-
-### Commit examples
+### Commit example
 
 - `feat: add homepage`
 - `fix: correct typo in readme`
