@@ -23,4 +23,5 @@ To keep our work organized, we follow these rules:
 - `feat(auth): implement JWT-based login`
 - `fix(api): correct response schema for users endpoint`
 
+
 For more details, see [CONTRIBUTING.md](./CONTRIBUTING.md).
