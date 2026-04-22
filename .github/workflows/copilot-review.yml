@@ -1,0 +1,30 @@
+name: Copilot Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+      - main
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write # Required to post comments
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: GitHub Copilot Reviewer
+        uses: github/copilot-review-action@v1 # Ensure you use the latest verified version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # You can customize the review focus here
+          review_type: 'comprehensive' 
+          focus: 'security, performance, and architecture'
