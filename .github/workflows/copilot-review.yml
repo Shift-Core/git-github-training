@@ -1,30 +1,44 @@
-name: Copilot Code Review
+name: Copilot and Engineer Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
   push:
     branches:
       - main
 
 jobs:
-  review:
+  review-and-assign:
     runs-on: ubuntu-latest
+    # Critical: These permissions are required for the bot to post comments
     permissions:
       contents: read
-      pull-requests: write # Required to post comments
-    
+      pull-requests: write
+      repository-projects: read
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # Step 1: AI Analysis
       - name: GitHub Copilot Reviewer
-        uses: github/copilot-review-action@v1 # Ensure you use the latest verified version
+        uses: github/copilot-review-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # You can customize the review focus here
-          review_type: 'comprehensive' 
+          review_type: 'comprehensive'
           focus: 'security, performance, and architecture'
+
+      # Step 2: Assign your two engineers
+      - name: Request Human Reviewers
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              reviewers: ['0PeterAdel', 'tawfik0x00']
+            })
