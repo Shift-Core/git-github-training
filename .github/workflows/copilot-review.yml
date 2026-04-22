@@ -1,46 +1,26 @@
-// SCSS Variables
-$primary-color: #3498db;
-$secondary-color: #2ecc71;
-$padding: 16px;
-$border-radius: 4px;
-
-// Mixin for button styles
-@mixin button-styles($bg-color: $primary-color) {
-  padding: $padding;
-  background-color: $bg-color;
-  border: none;
-  color: white;
-  border-radius: $border-radius;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($bg-color, 10%);
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-}
-
-// Button styling
-button {
-  @include button-styles;
-}
-
-button.secondary {
-  @include button-styles($secondary-color);
-}
-
-// Typography
-h1, h2, h3 {
-  color: $primary-color;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: $padding;
-  background-color: #f5f5f5;
-}
+name: Copilot and Engineer Review
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Request Human Reviewers
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const reviewers = ['0PeterAdel', 'tawfik0x00'];
+            await github.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers
+            });
