@@ -1,24 +1,27 @@
-name: Copilot and Engineer Review
+name: Request Human Reviewers
 on:
   pull_request:
-  push:
-    branches:
-      - main
+    types: [opened, synchronize]
+
 permissions:
-  contents: read
   pull-requests: write
+  contents: read
+
 jobs:
-  review:
+  request-reviewers:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Request Human Reviewers
-        uses: actions/github-script@v5
+      - uses: actions/github-script@v5
         with:
           script: |
-            const reviewers = ['0PeterAdel', 'tawfik0x00'];
-            await github.pulls.requestReviewers({
+            const reviewers = ['PeterAdel', 'tawfikox00'];
+            
+            if (!context.payload.pull_request) {
+              core.setFailed('PR context not available');
+              return;
+            }
+
+            await github.rest.pulls.requestReviewers({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
