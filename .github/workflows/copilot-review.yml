@@ -1,44 +1,46 @@
-name: Copilot and Engineer Review
+// SCSS Variables
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$padding: 16px;
+$border-radius: 4px;
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - main
+// Mixin for button styles
+@mixin button-styles($bg-color: $primary-color) {
+  padding: $padding;
+  background-color: $bg-color;
+  border: none;
+  color: white;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-jobs:
-  review-and-assign:
-    runs-on: ubuntu-latest
-    # Critical: These permissions are required for the bot to post comments
-    permissions:
-      contents: read
-      pull-requests: write
-      repository-projects: read
+  &:hover {
+    background-color: darken($bg-color, 10%);
+  }
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+  &:active {
+    transform: scale(0.98);
+  }
+}
 
-      # Step 1: AI Analysis
-      - name: GitHub Copilot Reviewer
-        uses: github/copilot-review-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          review_type: 'comprehensive'
-          focus: 'security, performance, and architecture'
+// Button styling
+button {
+  @include button-styles;
+}
 
-      # Step 2: Assign your two engineers
-      - name: Request Human Reviewers
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.pulls.requestReviewers({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number,
-              reviewers: ['0PeterAdel', 'tawfik0x00']
-            })
+button.secondary {
+  @include button-styles($secondary-color);
+}
+
+// Typography
+h1, h2, h3 {
+  color: $primary-color;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: $padding;
+  background-color: #f5f5f5;
+}
