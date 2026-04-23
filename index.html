@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 500px;
+        margin: 50px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #eaeaea;
+        margin: 10px 0;
+        padding: 12px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Team Members</h1>
+      <ul id="nameList"></ul>
+    </div>
+
+    <script>
+      let names = [
+        "Mohamed Abo",
+        "Peter",
+        "Sasa",
+        "Sameh",
+        "Salsabel",
+        "Augusta",
+      ];
+      let nameList = document.getElementById("nameList");
+
+      names.forEach(function (name) {
+        const li = document.createElement("li");
+        li.textContent = name;
+        nameList.appendChild(li);
+      });
+    </script>
+  </body>
+</html>
