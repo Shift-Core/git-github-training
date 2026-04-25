@@ -105,3 +105,5 @@ This improves accuracy and reduces manual effort.
 - Student registration page
 - Camera interface for attendance
 - Dashboard displaying attendance records
+
+## Jira test1
